@@ -19,7 +19,7 @@ jobs:
 
         - dockerfile: Docker-alpine
           containertag: ghcr.io/rajbos/testing-alpine
-          
+
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
@@ -49,3 +49,15 @@ jobs:
         uses: github/codeql-action/upload-sarif@v1
         with:
           sarif_file: snyk.sarif
+
+      - name: Scan image
+        uses: anchore/scan-action@v2
+        with:
+          image: ${{ matrix.containertag }}
+          fail-build: true
+          severity-cutoff: critical
+
+      - uses: homoluctus/gitrivy@v1.0.0
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          image: ${{ matrix.containertag }}
