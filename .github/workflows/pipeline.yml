@@ -3,12 +3,19 @@ on:
    workflow_dispatch:
    
 env:  
-  containertag: ghcr.io/rajbos/testing-snyk
   containerhost: https://ghcr.io
    
 jobs:
-  build:
 
+  build-test-image:
+    strategy:
+      matrix: 
+        include:
+        - dockerfile: Dockerfile
+          containertag: ghcr.io/rajbos/testing-snyk
+
+        - dockerfile: Dockerfile-runtime
+          containertag: ghcr.io/rajbos/testing-runtime
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
