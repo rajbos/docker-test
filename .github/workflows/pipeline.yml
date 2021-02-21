@@ -7,10 +7,12 @@ env:
   containerhost: https://ghcr.io
    
 jobs:
-  build-and-push-main:
+  build:
 
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v1
+       
       - name: Build the Docker image
         run: docker build -t $containertag .
       
