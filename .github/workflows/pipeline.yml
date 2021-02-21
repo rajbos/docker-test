@@ -37,7 +37,7 @@ jobs:
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
-          args: --file=Dockerfile
+          args: --file=${{ matrix.dockerfile }}
           image: ${{ matrix.containertag }}
         continue-on-error: true
 
