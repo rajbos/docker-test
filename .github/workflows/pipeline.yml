@@ -50,14 +50,15 @@ jobs:
         with:
           sarif_file: snyk.sarif
 
-      - name: Scan image
+      - name: Scan image with grype
         uses: anchore/scan-action@v2
         with:
           image: ${{ matrix.containertag }}
           fail-build: true
           severity-cutoff: critical
 
-      - uses: homoluctus/gitrivy@v1.0.0
+      - name: Scan image with Trivy
+        uses: homoluctus/gitrivy@v1.0.0
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           image: ${{ matrix.containertag }}
