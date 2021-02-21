@@ -1,3 +1,7 @@
+on:
+   push:
+   workflow_dispatch:
+   
 jobs:
   build-and-push-main:
 
@@ -7,14 +11,14 @@ jobs:
         run: docker build -t $containertag .
       
       - name: Run Snyk to check Docker image for vulnerabilities
-      uses: rajbos-actions/snyk-actions/docker@master
-      env:
-        SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-      with:
-        args: --file=Dockerfile
-      continue-on-error: true
+        uses: rajbos-actions/snyk-actions/docker@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          args: --file=Dockerfile
+        continue-on-error: true
 
-    - name: Upload Snyk scan result to GitHub Code Scanning
-      uses: github/codeql-action/upload-sarif@v1
-      with:
-        sarif_file: snyk.sarif
+      - name: Upload Snyk scan result to GitHub Code Scanning
+        uses: github/codeql-action/upload-sarif@v1
+        with:
+          sarif_file: snyk.sarif
