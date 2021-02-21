@@ -34,6 +34,7 @@ jobs:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
           args: --file=Dockerfile
+          image: $containertag
         continue-on-error: true
 
       - name: Upload Snyk scan result to GitHub Code Scanning
