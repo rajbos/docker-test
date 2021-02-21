@@ -21,13 +21,13 @@ jobs:
       - uses: actions/checkout@v1
        
       - name: Build the Docker image
-        run: docker build -t $containertag --pull .
+        run: docker build -t ${{ matrix.containertag }} --pull .
         
       - name: Setup GitHub Container Registry
         run: echo "${{ secrets.GH_PAT }}" | docker login $containerhost -u ${{ github.actor }} --password-stdin
 
       - name: Push to GitHub Container Registry
-        run:  docker push $containertag
+        run:  docker push ${{ matrix.containertag }}
         
       - name: Cleanup GitHub Container Registry login data
         run: docker logout $containerhost
@@ -38,7 +38,7 @@ jobs:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
           args: --file=Dockerfile
-          image: ${{ env.containertag }}
+          image: ${{ matrix.containertag }}
         continue-on-error: true
 
       - name: Upload Snyk scan result to GitHub Code Scanning
