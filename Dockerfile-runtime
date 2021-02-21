@@ -13,6 +13,8 @@ RUN apk add --no-cache \
         libstdc++ \
         zlib
 
+RUN apk add musl=1.2.2-r1 --force-broken-world
+
 ENV \
     # Configure web servers to bind to port 80 when present
     ASPNETCORE_URLS=http://+:80 \
