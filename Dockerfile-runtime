@@ -1,4 +1,4 @@
-FROM amd64/alpine:3.16.0
+FROM amd64/alpine:3.17.3
 
 RUN apk add musl=1.2.2-r1 --force-broken-world
 
